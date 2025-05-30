@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg bg-white sticky-top shadow-sm border-bottom" style="min-height: 80px;">
+  <div class="container-fluid px-4">
+    <!-- Brand -->
+    <a class="navbar-brand fw-semibold text-cornflower d-flex align-items-center" href="/listings">
+  <i class="fa-solid fa-hotel me-2"></i> Bookmynest
+</a>
+
+    <!-- Search Bar -->
+    <div class="col-6 d-none d-lg-block">
+      <form class="d-flex align-items-center" role="search">
+        <div class="position-relative w-100 me-2">
+          <input class="form-control ps-5 shadow-lg rounded-pill py-2 border border-light-subtle"
+                 type="search"
+                 placeholder="Explore stays around the world..."
+                 aria-label="Search" />
+          <i class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+        </div>
+        <button class="btn btn-outline-cornflower shadow-lg rounded-pill ms-2" type="submit">Search</button>
+      </form>
+    </div>
+
+    <!-- Navbar Items -->
+    <div class="d-flex align-items-center">
+      <ul class="navbar-nav flex-row align-items-center">
+        <li class="nav-item me-3">
+          <a class="nav-link text-cornflower fw-medium hover-underline" href="/listings/new">
+            <i class="fa-solid fa-plus me-1"></i> List your place
+          </a>
+        </li>
+
+        <% if (typeof currUser === 'undefined' || !currUser) { %>
+        <li class="nav-item me-3">
+          <a href="/login" class="nav-link text-secondary hover-underline d-flex align-items-center">
+            <i class="fa-solid fa-right-to-bracket me-1"></i> Login
+          </a>
+        </li>
+        <li class="nav-item me-3">
+          <a href="/signup" class="nav-link text-secondary hover-underline d-flex align-items-center">
+            <i class="fa-solid fa-user-plus me-1"></i> Signup
+          </a>
+        </li>
+        <% } else { %>
+        <li class="nav-item me-3">
+          <a href="/logout" class="nav-link text-danger hover-underline d-flex align-items-center">
+            <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
+          </a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

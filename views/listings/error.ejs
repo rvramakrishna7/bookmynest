@@ -1,0 +1,16 @@
+<% layout('./layouts/boilerplate') -%>
+<div class="container d-flex align-items-center justify-content-center vh-50">
+  <div class="text-center p-5 shadow-lg rounded-4 bg-white">
+    <h1 class="display-1 text-danger fw-bold">
+      <%= err.statusCode %>
+    </h1>
+    <h2 class="text-dark mb-3">
+      <%= err.message || err %>
+    </h2>
+    <p class="text-muted mb-4">Sorry, the page you're looking for doesn't exist or has been moved.</p>
+    <a href="/listings"
+       class="btn btn-outline-cornflower rounded-pill px-4 py-2">
+      <i class="fa-solid fa-hotel me-2"></i> Go back to Bookmynest
+    </a>
+  </div>
+</div>

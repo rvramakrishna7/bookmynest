@@ -1,0 +1,94 @@
+<% layout('./layouts/boilerplate.ejs') -%>
+<body>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="card shadow-sm rounded-4">
+                    <div class="card-body p-4">
+                        <form class="row g-4 needs-validation"
+                              action="/listings"
+                              method="post"
+                              enctype="multipart/form-data"
+                              novalidate>
+                            <!-- Title -->
+                            <div class="col-12">
+                                <label for="inputTitle" class="form-label">Title</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="inputTitle"
+                                       name="listing[title]"
+                                       placeholder="Title of your property"
+                                       required>
+                                <div class="valid-feedback">Looks good!</div>
+                            </div>
+                            <!-- Description -->
+                            <div class="col-12">
+                                <label for="inputDescription" class="form-label">Description</label>
+                                <textarea class="form-control"
+                                          id="inputDescription"
+                                          name="listing[description]"
+                                          placeholder="Describe your place"
+                                          rows="3"
+                                          required></textarea>
+                                <div class="valid-feedback">Looks good!</div>
+                            </div>
+                            <!-- Image Upload -->
+                            <div class="col-12">
+                                <label for="inputImage" class="form-label">Upload Image</label>
+                                <input type="file"
+                                       class="form-control"
+                                       id="inputImage"
+                                       name="listing[image][url]"
+                                       required>
+                            </div>
+                            <!-- Location & Price Info -->
+                            <div class="col-md-6">
+                                <label for="inputCity" class="form-label">Location</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="inputCity"
+                                       name="listing[location]"
+                                       placeholder="City or Area"
+                                       required>
+                                <div class="invalid-feedback">Please provide a valid location.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputCountry" class="form-label">Country</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="inputCountry"
+                                       name="listing[country]"
+                                       placeholder="Country"
+                                       required>
+                                <div class="invalid-feedback">Please provide a valid country.</div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="inputPrice" class="form-label">Price</label>
+                                <input type="number"
+                                       class="form-control"
+                                       id="inputPrice"
+                                       name="listing[price]"
+                                       placeholder="INR"
+                                       min="0"
+                                       required>
+                            </div>
+                            <!-- Terms -->
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                                    <label class="form-check-label" for="gridCheck">I accept the terms and conditions.</label>
+                                </div>
+                            </div>
+                            <!-- Submit -->
+                            <div class="">
+                                <button type="submit" class="btn btn-outline-custom col-12">
+                                    <i class="fa fa-plus-circle me-1"></i> Add Listing
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

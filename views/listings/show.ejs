@@ -1,0 +1,128 @@
+<% layout('./layouts/boilerplate.ejs') -%>
+<script>
+    const mapToken = "<%= process.env.MAP_TOKEN %>";
+    const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>
+</script>
+<body>
+    <div class="container py-4">
+        <!-- Listing Card -->
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card shadow-sm rounded-4 overflow-hidden mb-4">
+                    <img src="<%= listing.image.url %>"
+                         class="card-img-top object-fit-cover"
+                         alt="Bookmynest Image"
+                         style="height: 350px">
+                    <div class="card-body">
+                        <h4 class="card-title fw-semibold mb-1">
+                            <%= listing.title %>
+                        </h4>
+                        <p class="text-muted mb-2">
+                            Owned by <strong><%= listing.owner.username %></strong>
+                        </p>
+                        <p class="card-text text-secondary mb-3">
+                            <%= listing.description %>
+                        </p>
+                        <div class="d-flex justify-content-between small text-muted border-top pt-2">
+                            <span><strong>₹<%= listing.price.toLocaleString("en-IN") %></strong> / night</span>
+                            <span><%= listing.location %>, <%= listing.country %></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Owner Action Buttons -->
+                <% if (currUser && currUser._id.equals(listing.owner._id)) { %>
+                <div class="d-flex justify-content-between mb-4">
+                    <a href="/listings/<%= listing._id %>/edit"
+                       class="btn bookmynest-btn w-50 me-2">Edit</a>
+                    <form action="/listings/<%= listing._id %>?_method=DELETE"
+                          method="POST"
+                          class="w-50">
+                        <button type="submit" class="btn bookmynest-btn-danger w-100">Delete</button>
+                    </form>
+                </div>
+                <% } %>
+            </div>
+        </div>
+        <!-- Review Section -->
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <% if (currUser) { %>
+                <h5 class="text-secondary border-bottom pb-2 mb-4">Leave a Review</h5>
+                <form action="/listings/<%= listing._id %>/review"
+                      method="POST"
+                      class="needs-validation"
+                      novalidate>
+                    <!-- Rating Stars -->
+                    <fieldset class="starability-coinFlip mb-3">
+                        <legend class="form-label text-muted small">Your Rating</legend>
+                        <% for (let i = 1; i <= 5; i++) { %>
+                        <input type="radio" id="rate<%= i %>" name="review[rating]" value="<%= i %>" />
+                            <label for="rate<%= i %>">
+                                <%= i %> star<%= i > 1 ? 's' : '' %>
+                            </label>
+                            <% } %>
+                        </fieldset>
+                        <!-- Review Text -->
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control"
+                                      placeholder="Write a review here"
+                                      id="floatingTextarea"
+                                      name="review[comment]"
+                                      required
+                                      style="min-height: 100px"></textarea>
+                            <label for="floatingTextarea">Write your thoughts...</label>
+                            <div class="invalid-feedback">Please share your feedback before submitting.</div>
+                        </div>
+                        <!-- Submit -->
+                        <div class="text-end">
+                            <button type="submit" class="btn bookmynest-btn">Submit</button>
+                        </div>
+                    </form>
+                    <% } %>
+                    <!-- Reviews List -->
+                    <% if (listing.review.length > 0) { %>
+                    <div class="mt-5 pt-4 border-top">
+                        <h5 class="text-secondary mb-4">What others are saying</h5>
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                            <% for (let review of listing.review) { %>
+                            <div class="col">
+                                <div class="card border-0 shadow-sm rounded-3 h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="text-muted small">@<%= review.author.username %></span>
+                                            <p class="starability-result star-result small mb-0"
+                                               data-rating="<%= review.rating %>"></p>
+                                        </div>
+                                        <p class="card-text text-muted small">
+                                            <%= review.comment %>
+                                        </p>
+                                    </div>
+                                    <% if (currUser && currUser._id.equals(review.author._id)) { %>
+                                    <form action="/listings/<%= listing._id%>/review/<%= review._id%>?_method=DELETE"
+                                          method="POST"
+                                          class="px-3 pb-3">
+                                        <div class="d-flex justify-content-end">
+                                            <button type="submit"
+                                                    class="btn btn-link btn-sm text-danger text-decoration-none p-0">
+                                                <i class="fa fa-trash me-1"></i> Delete
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <!-- Map -->
+            <div class="row justify-content-center my-5">
+                <div class="col-md-10 col-lg-8">
+                    <div id="map" class="rounded-4 shadow-sm" style="height: 350px;"></div>
+                </div>
+            </div>
+        </div>
+        <script src="/js/map.js"></script>
+    </body>
